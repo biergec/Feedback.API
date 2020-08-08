@@ -19,7 +19,7 @@ namespace Feedback.API.Controllers
         /// Save Message
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("Save")]
         public async Task<IActionResult> Save([FromBody] VmSaveFeedback param)
         {
             param.DeviceKey = DeviceKey;
