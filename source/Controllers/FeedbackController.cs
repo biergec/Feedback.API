@@ -1,24 +1,39 @@
 ﻿using System.Threading.Tasks;
+using Feedback.API.Model.Interface;
+using Feedback.API.Model.ViewModel;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace Feedback.API.Controllers
 {
     public class FeedbackController : BaseController
     {
-        public FeedbackController(IConfiguration configuration) : base(configuration)
-        {
+        private readonly IFeedbackService feedbackService;
 
+        public FeedbackController(IFeedbackService feedbackService)
+        {
+            this.feedbackService = feedbackService;
         }
+
 
         /// <summary>
         /// Save Message
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Save()
+        public async Task<IActionResult> Save([FromBody] VmSaveFeedback param)
         {
-            return Ok();
+            param.DeviceKey = DeviceKey;
+            param.ApplicationKey = ApplicationKey;
+
+            var result = await feedbackService.SaveFeedback(param);
+            if (result == true)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

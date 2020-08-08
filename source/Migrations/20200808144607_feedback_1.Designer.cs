@@ -3,15 +3,17 @@ using System;
 using Feedback.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Feedback.API.Migrations
 {
     [DbContext(typeof(FeedbackContext))]
-    partial class FeedbackContextModelSnapshot : ModelSnapshot
+    [Migration("20200808144607_feedback_1")]
+    partial class feedback_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,11 +31,12 @@ namespace Feedback.API.Migrations
                     b.Property<string>("ApplicationName")
                         .HasColumnType("text");
 
-                    b.Property<string>("ApplicationPublicKey")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DeviceKey")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<bool>("Enabled")
                         .HasColumnType("boolean");

@@ -1,35 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
 namespace Feedback.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class BaseController : Controller
     {
-        private readonly IConfiguration _configuration;
+        public string ApplicationKey { get; set; }
 
-        public BaseController(IConfiguration configuration)
+        public string DeviceKey { get; set; }
+
+
+        public BaseController()
         {
-            _configuration = configuration;
+
         }
 
         /// <summary>
-        /// Control secret key
+        /// Control and save secret key
         /// </summary>
         /// <param name="context"></param>
         /// <param name="next"></param>
         /// <returns></returns>
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            // Token varsa giriş yapmış demektir
-            var applicationNameRequest = context.HttpContext.Request.Headers["ApplicationName"].ToString();
-            var applicationKeyRequest = context.HttpContext.Request.Headers["ApplicationKey"].ToString();
+            ApplicationKey = context.HttpContext.Request.Headers["ApplicationKey"].ToString();
+            DeviceKey = context.HttpContext.Request.Headers["DeviceKey"].ToString();
 
-            var appSecretKeyLocal = _configuration[$"Applications:App{applicationNameRequest}"];
-            if (string.IsNullOrWhiteSpace(appSecretKeyLocal) || appSecretKeyLocal != applicationKeyRequest)
+            if (string.IsNullOrWhiteSpace(ApplicationKey) || string.IsNullOrWhiteSpace(DeviceKey))
             {
                 // Not authorize
                 context.Result = Unauthorized("...");

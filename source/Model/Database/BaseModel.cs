@@ -12,12 +12,7 @@ namespace Feedback.API.Model.Database
         /// Created date
         /// </summary>
         [Required]
-        public DateTime CreatedDate { get; set; }
-        /// <summary>
-        /// Device uniq number/code
-        /// </summary>
-        [Required]
-        public string DeviceKey { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
         /// <summary>
         /// Record active/inactive status
         /// </summary>

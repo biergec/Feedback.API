@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Feedback.API.Data;
+using Feedback.API.Model.Interface;
+using Feedback.API.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +28,8 @@ namespace Feedback.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IFeedbackService, FeedbackService>();
+
             services.AddControllers();
 
             services.AddDbContext<FeedbackContext>(options =>
