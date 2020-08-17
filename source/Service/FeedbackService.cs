@@ -2,6 +2,8 @@
 using Feedback.API.Model.Interface;
 using Feedback.API.Model.ViewModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Threading.Tasks;
 
 namespace Feedback.API.Service
@@ -9,9 +11,13 @@ namespace Feedback.API.Service
     public class FeedbackService : IFeedbackService
     {
         private readonly FeedbackContext feedbackContext;
+        private readonly IMyEmailSender myEmailSender;
+        private readonly IConfiguration config;
 
-        public FeedbackService(FeedbackContext feedbackContext)
+        public FeedbackService(FeedbackContext feedbackContext, IMyEmailSender myEmailSender, IConfiguration config)
         {
+            this.myEmailSender = myEmailSender;
+            this.config = config;
             this.feedbackContext = feedbackContext;
         }
 
@@ -27,6 +33,12 @@ namespace Feedback.API.Service
 
             await feedbackContext.Feedback.AddAsync(feedbackModel);
             var resultCount = await feedbackContext.SaveChangesAsync();
+
+            //Send Mail?
+            if (resultCount > 0 && Convert.ToBoolean(config["NewFeedbackAfterSendMail"]))
+            {
+                await myEmailSender.SendEmailAsync(config["NewFeedbackAfterSendMailAdress"], "Feedback", $"Feedback Application : {applicationDetail.ApplicationName} | \n Message : {param.Message}");
+            }
 
             return resultCount > 0;
         }

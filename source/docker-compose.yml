@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  feedback.api:
+    image: ${DOCKER_REGISTRY-}feedbackapi
+    build:
+      context: .
+      dockerfile: Dockerfile

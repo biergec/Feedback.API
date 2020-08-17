@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Feedback.API.Data;
 using Feedback.API.Model.Interface;
 using Feedback.API.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace Feedback.API
 {
@@ -29,6 +24,7 @@ namespace Feedback.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IFeedbackService, FeedbackService>();
+            services.AddScoped<IMyEmailSender, EmailService>();
 
             services.AddControllers();
 
@@ -54,6 +50,8 @@ namespace Feedback.API
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSerilogRequestLogging();
         }
     }
 }
