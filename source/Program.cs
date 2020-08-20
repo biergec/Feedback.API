@@ -39,6 +39,7 @@ namespace Feedback.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls(urls: "http://localhost:5005");
                 });
     }
 }

@@ -23,7 +23,7 @@ namespace Feedback.API.Service
 
         public async Task<bool> SaveFeedback(VmSaveFeedback param)
         {
-            var applicationDetail = await feedbackContext.Applications.SingleOrDefaultAsync(x => x.Enabled && x.ApplicationPublicKey == param.ApplicationKey);
+            var applicationDetail = await feedbackContext.Applications.FirstOrDefaultAsync(x => x.Enabled && x.ApplicationPublicKey == param.ApplicationKey);
 
             Model.Database.Feedback feedbackModel = new Model.Database.Feedback();
             feedbackModel.DeviceKey = param.DeviceKey;
