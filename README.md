@@ -10,6 +10,13 @@ After registering your mobile or web applications in the database, you can colle
  - Incoming feedback can be sent to an e-mail address by e-mail optionally.
  - Postgresql is used as database.
 
+## Used Technologies
+
+
+ - .NET Core 3 
+ - Ef Core 3
+ - Docker
+ - Postgresql
 
 
 ---------------------------------------------------------------------------------------------------------------------------------
@@ -26,3 +33,10 @@ Mobil veya web uygulamalarınızı veri tabanına kayıt ettikten sonra gelen t�
  - Birden fazla uygulama kaydı gerçekleştirilebilir.
  - Gelen feedbacklerin isteğe bağlı olarak mail ile e-posta adresine gönderimi sağlanabilir. 
  - Veri tabanı olarak Postgresql kullanılmıştır.
+
+## Kullanılan Teknolojiler
+
+ - .NET Core 3 
+ - Ef Core 3
+ - Docker
+ - Postgresql
