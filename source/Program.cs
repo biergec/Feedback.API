@@ -10,14 +10,6 @@ namespace Feedback.API
     {
         public static void Main(string[] args)
         {
-            //Read Configuration from appSettings
-            var config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
-            //Initialize Logger
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(config)
-                .CreateLogger();
             try
             {
                 Log.Information("Application Starting.");
@@ -35,7 +27,6 @@ namespace Feedback.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseSerilog() //Uses Serilog instead of default .NET Logger
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

@@ -50,8 +50,6 @@ namespace Feedback.API
             {
                 endpoints.MapControllers();
             });
-
-            app.UseSerilogRequestLogging();
         }
     }
 }
